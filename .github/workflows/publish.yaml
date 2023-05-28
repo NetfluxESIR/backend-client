@@ -53,10 +53,12 @@ jobs:
         uses: ASzc/change-string-case-action@v1
         with:
           string: ${{ github.repository }}
+      - name: Setup SSH Keys and known_hosts
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
       - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: .
-          build-args: ssh_prv_key=${{ secrets.SSH_PRIVATE_KEY }}
-          tags: ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }},ghcr.io/${{ steps.lower.outputs.lowercase }}:latest
+        run: |
+          docker buildx build  -t ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }} -t ghcr.io/${{ steps.lower.outputs.lowercase }}:latest --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)"
+          docker push ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }}
+          docker push ghcr.io/${{ steps.lower.outputs.lowercase }}:latest
