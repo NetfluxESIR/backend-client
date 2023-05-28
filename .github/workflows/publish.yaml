@@ -58,5 +58,6 @@ jobs:
         with:
           push: true
           context: .
-          build-args: ssh_prv_key=${{ secrets.SSH_PRIVATE_KEY }}
+          build-args: |
+            ssh_prv_key=${{ secrets.SSH_PRIVATE_KEY }}
           tags: ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }},ghcr.io/${{ steps.lower.outputs.lowercase }}:latest
