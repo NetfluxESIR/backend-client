@@ -59,7 +59,6 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
       - name: Build and push
         run: |
-          docker build -t ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }} --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)"
+          docker build -t ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }} -t ghcr.io/${{ steps.lower.outputs.lowercase }}:latest . --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)"
           docker push ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }}
-          docker tag ghcr.io/${{ steps.lower.outputs.lowercase }}:${{ github.run_number }} ghcr.io/${{ steps.lower.outputs.lowercase }}:latest
           docker push ghcr.io/${{ steps.lower.outputs.lowercase }}:latest
