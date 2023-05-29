@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/NetfluxESIR/backend/pkg/api/gen"
 	"github.com/google/uuid"
+	"net/http"
 )
 
 func (c *Client) SetSteps(ctx context.Context, videoId string, step string, status string, logs string) error {
@@ -17,6 +18,10 @@ func (c *Client) SetSteps(ctx context.Context, videoId string, step string, stat
 		Step:   gen.UpdateProcessingStepJSONBodyStep(step),
 		Status: &s,
 		Logs:   func() *string { return &logs }(),
+	}, func(ctx context.Context, req *http.Request) error {
+		// Add the token to the request
+		req.Header.Set("Authorization", "Bearer "+c.token)
+		return nil
 	})
 	if err != nil {
 		return err
