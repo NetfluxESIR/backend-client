@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) SetSteps(ctx context.Context, videoId string, step string, status string, logs string) error {
+func (c *Client) SetSteps(ctx context.Context, videoId string, step string, status string, log string) error {
 	id, err := uuid.Parse(videoId)
 	if err != nil {
 		return err
@@ -17,7 +17,7 @@ func (c *Client) SetSteps(ctx context.Context, videoId string, step string, stat
 	response, err := c.apiClient.UpdateProcessingStepWithResponse(ctx, id, gen.UpdateProcessingStepJSONRequestBody{
 		Step:   gen.UpdateProcessingStepJSONBodyStep(step),
 		Status: &s,
-		Logs:   func() *string { return &logs }(),
+		Log:    func() *string { return &log }(),
 	}, func(ctx context.Context, req *http.Request) error {
 		// Add the token to the request
 		req.Header.Set("Authorization", "Bearer "+c.token)
