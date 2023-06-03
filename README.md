@@ -89,6 +89,7 @@ Global Flags:
 
 ### Requirements
 
+- [Git](https://git-scm.com/downloads)
 - [Go](https://golang.org/doc/install)
 
 ### Run from source
@@ -96,6 +97,8 @@ Global Flags:
 #### Build the client
 
 ```bash
+git clone https://github.com/NetfluxESIR/backend-client.git
+cd backend-client
 go build -o backend-client main.go
 ```
 
