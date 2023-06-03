@@ -5,8 +5,16 @@ related to the pipeline execution.
 
 ## Installation
 
+If you want to use the backend client follow the instructions below.
+
+### Requirements
+
+- [Docker](https://docs.docker.com/get-docker/)
+
+### Run with Docker
+
 ```bash
-docker pull ghcr.io/netfluxesir/backend-client:latest
+docker run ghcr.io/netfluxesir/backend-client:latest [command]
 ```
 
 ## Usage
@@ -75,4 +83,24 @@ Global Flags:
   -p, --password string   password
   -r, --role string       role
   -U, --url string        url
+```
+
+## Development
+
+### Requirements
+
+- [Go](https://golang.org/doc/install)
+
+### Run from source
+
+#### Build the client
+
+```bash
+go build -o backend-client main.go
+```
+
+#### Run the client
+
+```bash
+./backend-client [command]
 ```
